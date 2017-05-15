@@ -28,13 +28,29 @@ public class CheckerDriver {
      
      
       while(board.checkWin() == false){//Play Game
-      
-        
-        
-        
-        
-      
-      
+         int tempX;
+         int tempY;
+         if(isRedMove == true){
+            System.out.println("Red Player, type x coordinate of the piece you want to move");
+            tempX = console.nextInt();
+            System.out.println("Red Player, type y coordinate of the piece you want to move");
+            tempY = console.nextInt();
+            System.out.println("Moves available to you are as follows");
+            System.out.println();////////////////////////////////////////////////////////////////Insert array of moves here
+            System.out.println("Red Player, type number of move you want to make");
+            board.move();
+         }
+         else{
+            System.out.println("Black Player, type x coordinate of the piece you want to move");
+            tempX = console.nextInt();
+            System.out.println("Black Player, type y coordinate of the piece you want to move");
+            tempY = console.nextInt();
+            System.out.println("Moves available to you are as follows");
+            System.out.println();////////////////////////////////////////////////////////////////Insert array of moves here
+            System.out.println("Black Player, type number of the move you want to make");
+            board.move();
+         }
+         System.out.println(board);
       }
       
       //Find who won
