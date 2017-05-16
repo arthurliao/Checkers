@@ -14,9 +14,7 @@ public class CheckerBoard {
 		board = new int[8][8];
 		redNum = 12;
 		blackNum = 12;
-		setUpBoard();
-	}
-	
+		setUpBoard();	}	
 	private void setUpBoard()
 	{
 	      for (int row = 0; row < 8; row++) {
@@ -26,8 +24,7 @@ public class CheckerBoard {
 	                   board[row][col] = BLACK;
 	                else if (row > 4)
 	                   board[row][col] = RED;
-	                else
-	                   board[row][col] = EMPTY;
+	                else	                   board[row][col] = EMPTY;
 	             }
 	             else {
 	                board[row][col] = EMPTY;
@@ -49,7 +46,7 @@ public class CheckerBoard {
 
 	}
     
-	private boolean checkWin()
+	public boolean checkWin()
 	{
 		if(redNum == 0)
 			return true;
@@ -85,7 +82,7 @@ public class CheckerBoard {
      
   }  // end canMove()
 
-  private ArrayList<Move> legalMoves(int initX, int initY)
+  public ArrayList<Move> legalMoves(int initX, int initY)
   {
 	  int player = board[initX][initY];
 	  Vector<Move> moves = new Vector();
