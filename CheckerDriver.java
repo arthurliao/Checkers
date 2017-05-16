@@ -1,4 +1,5 @@
-bopublic class CheckerDriver {
+import java.util.Scanner;
+public class CheckerDriver {
 
    boolean blackIsPlayer;
    boolean redIsPlayer;
@@ -30,7 +31,7 @@ bopublic class CheckerDriver {
       while(board.checkWin() == false){//Play Game
          int tempX;
          int tempY;
-         if(isRedMove == true){
+         if(isRedsMove == true){
             System.out.println("Red Player, type x coordinate of the piece you want to move");
             tempX = console.nextInt();
             System.out.println("Red Player, type y coordinate of the piece you want to move");
