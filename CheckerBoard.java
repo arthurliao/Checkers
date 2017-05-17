@@ -14,7 +14,9 @@ public class CheckerBoard {
 		board = new int[8][8];
 		redNum = 12;
 		blackNum = 12;
-		setUpBoard();	}	
+		setUpBoard();
+	}
+	
 	private void setUpBoard()
 	{
 	      for (int row = 0; row < 8; row++) {
@@ -24,7 +26,8 @@ public class CheckerBoard {
 	                   board[row][col] = BLACK;
 	                else if (row > 4)
 	                   board[row][col] = RED;
-	                else	                   board[row][col] = EMPTY;
+	                else
+	                   board[row][col] = EMPTY;
 	             }
 	             else {
 	                board[row][col] = EMPTY;
@@ -37,7 +40,7 @@ public class CheckerBoard {
 	{
 		ArrayList legalMoves = legalMoves(validMove.getInitX(), validMove.getInitY());
 		if(legalMoves.contains(validMove))
-		{
+      {
 			int value = board[validMove.getInitX()][validMove.getInitY()];
 			board[validMove.getInitX()][validMove.getInitY()] = 0;
 			board[validMove.getTargetX()][validMove.getTargetY()] = value;
@@ -73,7 +76,7 @@ public class CheckerBoard {
         if (board[initX][initY] == RED && targetX > initX)
             return false;  // Regualr red piece can only move down.
          return true;  // The move is legal.
-     }
+           }
      else {
         if (board[initX][initY] == BLACK && targetX < initX)
             return false;  // Regular black piece can only move up.
@@ -106,6 +109,21 @@ public class CheckerBoard {
 	  return list;
 
   }
+  
+  public String toString()
+  {
+     String printout = "";
+     for(int y = 0; y < 8; y++)
+     {
+        for(int x = 0; x < 8; x++)
+        {
+           printout += "[" + board[y][x] + "]";
+        }
+        printout += "\n";
+     }
+     return printout;
+  }
+  
 }
 
 class Move
@@ -138,4 +156,9 @@ class Move
 	{
 		return targetY;
 	}
-}
+   
+   public String toString()
+   {
+      return "(" + initialX + ", " + initialY + ") -> (" + targetX + ", " + targetY + ")";
+   }
+}         

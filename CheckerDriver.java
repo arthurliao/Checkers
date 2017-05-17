@@ -1,14 +1,14 @@
 import java.util.Scanner;
 public class CheckerDriver {
 
-   boolean blackIsPlayer;
-   boolean redIsPlayer;
-   boolean isRedsMove;
-   CheckerBoard board;
+   static boolean blackIsPlayer;
+   static boolean redIsPlayer;
+   static boolean isRedsMove;
+   static CheckerBoard board;
    
    
    public static void main(String args[]){
-      Scanner console = new Scanner (System.in);
+      Scanner console = new Scanner(System.in);
       isRedsMove = true;
       System.out.println("Is black a real player? type y/n");//Determine who is real and who will be computer controlled
       if(console.next().equals("y")){
@@ -52,6 +52,10 @@ public class CheckerDriver {
             board.move(board.legalMoves(tempX, tempY).get(console.nextInt()));
          }
          System.out.println(board);
+         if(isRedsMove = true)
+            isRedsMove = false;
+         else
+            isRedsMove = true;
       }
       
       //Find who won
