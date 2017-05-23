@@ -1,4 +1,4 @@
-=import java.util.Scanner;
+import java.util.Scanner;
 public class CheckerDriver {
 
    static boolean blackIsPlayer;
@@ -29,25 +29,31 @@ public class CheckerDriver {
      
      
       while(board.checkWin() == false){//Play Game
-         int tempX;
-         int tempY;
+         int tempX = 0;
+         int tempY = 1;
          if(isRedsMove == true){
-            System.out.println("Red Player, type x coordinate of the piece you want to move");
-            tempX = console.nextInt();
-            System.out.println("Red Player, type y coordinate of the piece you want to move");
-            tempY = console.nextInt();
-            System.out.println("Moves available to you are as follows");
-            System.out.println(board.legalMoves(tempX, tempY));////////////////////////////////////////////////////////////////Insert array of moves here
+            while(board.legalMoves(tempX, tempY).size() == 0)
+            {
+            	System.out.println("Red Player, type x coordinate of the piece you want to move");
+	            tempX = console.nextInt();
+	            System.out.println("Red Player, type y coordinate of the piece you want to move");
+	            tempY = console.nextInt();
+	            System.out.println("Moves available to you are as follows");
+	            System.out.println(board.legalMoves(tempX, tempY));////////////////////////////////////////////////////////////////Insert array of moves here
+            }
             System.out.println("Red Player, type number of move you want to make");
             board.move(board.legalMoves(tempX, tempY).poll());//get(console.nextInt()));
          }
          else{
-            System.out.println("Black Player, type x coordinate of the piece you want to move");
-            tempX = console.nextInt();
-            System.out.println("Black Player, type y coordinate of the piece you want to move");
-            tempY = console.nextInt();
-            System.out.println("Moves available to you are as follows");
-            System.out.println(board.legalMoves(tempX, tempY));////////////////////////////////////////////////////////////////Insert array of moves here
+            while(board.legalMoves(tempX, tempY).size() == 0)
+            {
+            	System.out.println("Black Player, type x coordinate of the piece you want to move");
+	            tempX = console.nextInt();
+	            System.out.println("Black Player, type y coordinate of the piece you want to move");
+	            tempY = console.nextInt();
+	            System.out.println("Moves available to you are as follows");
+	            System.out.println(board.legalMoves(tempX, tempY));////////////////////////////////////////////////////////////////Insert array of moves here
+            }
             System.out.println("Black Player, type number of the move you want to make");
             board.move(board.legalMoves(tempX, tempY).poll());//get(console.nextInt()));
          }
