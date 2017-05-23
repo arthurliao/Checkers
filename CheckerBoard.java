@@ -129,14 +129,25 @@ public class CheckerBoard {
 class Move
 {
 	private int initialX, initialY, targetX, targetY;
+   ArrayList<Coordinates> jumped = new ArrayList<Coordinates>;
 	public Move(int initX, int initY, int targX, int targY)
 	{
 		initialX = initX;
 		initialY = initY;
 		targetX = targX;
 		targetY = targY;
+      jumped = null;
 	}
 	
+   public Move(int initX, int initY, int targX, int targY, list jumps)
+   {
+      initialX = initX;
+		initialY = initY;
+		targetX = targX;
+		targetY = targY;
+      jumped = jumps;
+   }
+   
 	public int getInitX()
 	{
 		return initialX;
@@ -157,8 +168,39 @@ class Move
 		return targetY;
 	}
    
+   public ArrayList<Coordinates> getJumped()
+   {
+      return jumped;
+   }
+   
    public String toString()
    {
       return "(" + initialX + ", " + initialY + ") -> (" + targetX + ", " + targetY + ")";
    }
 }         
+
+class Coordinate
+{
+	private int x, y;
+	public Coordinate(int initX, int initY)
+	{
+		initialX = initX;
+		initialY = initY;
+	}
+	
+	public int getX()
+	{
+		return x;
+	}
+	
+	public int getY()
+	{
+		return y;
+	}
+   
+   public String toString()
+   {
+      return "(" + x + ", " + y + ")";
+   }
+}
+
