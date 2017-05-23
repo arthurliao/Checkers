@@ -119,8 +119,7 @@ public class CheckerBoard {
     		  moves.addElement(new Move(row,col,row+1,col+1));
           if (canMove(row,col,row+1,col-1))
               moves.addElement(new Move(row,col,row+1,col-1));
-      }
-      else if(player == RED)
+      }      else if(player == RED)
       {
 	      if (canMove(row,col,row-1,col+1))
 	          moves.addElement(new Move(row,col,row-1,col+1));
@@ -147,7 +146,7 @@ public class CheckerBoard {
   
   private ArrayList<Move> jumpMove(int row, int col, ArrayList<Coordinates> jumpedPieces, ArrayList<Move> moves)
   {
-	  if(!(canMove(row, col, row + 2, col +2) && canMove(row, col, row + 2, col -2) && canMove(row, col, row + 2, col - 2) && canMove(row, col, row - 2, col -2)))
+	  if(!(canMove(row, col, row + 2, col +2) || canMove(row, col, row + 2, col -2) || canMove(row, col, row + 2, col - 2) || canMove(row, col, row - 2, col -2)))
 		  return moves;
 	  int player = board[row][col];
 	  if(player == BLACK)
