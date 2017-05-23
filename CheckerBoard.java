@@ -174,7 +174,7 @@ class Move
    
    public String toString()
    {
-      return "(" + initialX + ", " + initialY + ") -> (" + targetX + ", " + targetY + ")";
+      return "(" + initialX + ", " + initialY + ") -> (" + targetX + ", " + targetY + ")" + "J(" + jumped + ")";
    }
 }         
 
