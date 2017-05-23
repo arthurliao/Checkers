@@ -38,13 +38,33 @@ public class CheckerBoard {
 	
 	public boolean move(Move validMove)
 	{
-		ArrayList legalMoves = legalMoves(validMove.getInitX(), validMove.getInitY());
-		if(legalMoves.contains(validMove))
-      {
-			int value = board[validMove.getInitX()][validMove.getInitY()];
-			board[validMove.getInitX()][validMove.getInitY()] = 0;
-			board[validMove.getTargetX()][validMove.getTargetY()] = value;
-		}
+		//ArrayList legalMoves = legalMoves(validMove.getInitX(), validMove.getInitY());
+		//if(legalMoves.contains(validMove))
+		//{
+			ArrayList<Coordinates> jumpedPieces = validMove.getJumped();
+		    
+			int initX = validMove.getInitX();
+			int initY = validMove.getInitY();
+			int targX = validMove.getTargetX();
+			int targY = validMove.getTargetY();
+
+			
+			if(jumpedPieces.size() != 0)//regular move
+			{
+				for(int i = 0; i < jumpedPieces.size(); i++)
+				{
+					int removeX = jumpedPieces.get(i).getX();
+					int removeY = jumpedPieces.get(i).getY();
+					board[removeX][removeY] = EMPTY;
+				}
+			}
+			
+			int value = board[initX][initY];
+			board[initX][initY] = 0;
+			board[targX][targY] = value;
+				
+			
+			
 		return checkWin();
 
 	}
@@ -57,7 +77,7 @@ public class CheckerBoard {
 			return true;
 		else	
 			return false;
-/	}
+	}
 	
 	private boolean canMove(int initX, int initY, int targetX, int targetY) {
         // This is called by the getLegalMoves() method to determine whether
@@ -76,7 +96,7 @@ public class CheckerBoard {
         if (board[initX][initY] == RED && targetX > initX)
             return false;  // Regualr red piece can only move down.
          return true;  // The move is legal.
-           }
+     }
      else {
         if (board[initX][initY] == BLACK && targetX < initX)
             return false;  // Regular black piece can only move up.
@@ -87,30 +107,48 @@ public class CheckerBoard {
 
   public ArrayList<Move> legalMoves(int initX, int initY)
   {
+	  int player = board[initX][initY];
 	  Vector<Move> moves = new Vector();
-	  int row = initX;
-          int col = initY;
-	  //for (int row = 0; row < 8; row++) {
-          //for (int col = 0; col < 8; col++) {
-             if (board[row][col] != 0) {
-                if (canMove(row,col,row+1,col+1))
-                   moves.addElement(new Move(row,col,row+1,col+1));
-                if (canMove(row,col,row-1,col+1))
-                   moves.addElement(new Move(row,col,row-1,col+1));
-                if (canMove(row,col,row+1,col-1))
-                   moves.addElement(new Move(row,col,row+1,col-1));
-                if (canMove(row,col,row-1,col-1))
-                   moves.addElement(new Move(row,col,row-1,col-1));
-             }
+	  
+
+      int row = initX;
+      int col = initY;
+      if(player == BLACK)
+      {
+    	  if (canMove(row,col,row+1,col+1))
+    		  moves.addElement(new Move(row,col,row+1,col+1));
+          if (canMove(row,col,row+1,col-1))
+              moves.addElement(new Move(row,col,row+1,col-1));
+          if(canMove(row, col, row + 2, col +2) && board[row+1][col+1] == RED)
+        	  moves.addElement(new Move(row, col, row+2, col+2));
+          if(canMove(row, col, row + 2, col -2) && board[row+1][col-1] == RED)
+        	  moves.addElement(new Move(row, col, row+2, col-2));
+      }
+      else if(player == RED)
+      {
+	      if (canMove(row,col,row-1,col+1))
+	          moves.addElement(new Move(row,col,row-1,col+1));
+	      if (canMove(row,col,row-1,col-1))
+	          moves.addElement(new Move(row,col,row-1,col-1));
+          if(canMove(row, col, row - 2, col - 2) && board[row-1][col-1] == BLACK)
+          {
+        	  ArrayList<Coordinates> temp = new ArrayList<Coordinates>();
+        	  temp.add(new Coordinates(row-1,col-1));
+        	  moves.addElement(new Move(row, col, row-2, col-2, temp));
           }
-       }
+          if(canMove(row, col, row - 2, col + 2) && board[row-1][col+1] == BLACK)
+        	  moves.addElement(new Move(row, col, row-2, col-2));
+      }
+
 	  
 	  ArrayList<Move> list = new ArrayList<Move>(moves);
 	  return list;
 
   }
   
-L  public String toString()
+  private 
+
+  public String toString()
   {
      String printout = "";
      for(int y = 0; y < 8; y++)
@@ -123,28 +161,27 @@ L  public String toString()
      }
      return printout;
   }
-  
 }
 
 class Move
 {
 	private int initialX, initialY, targetX, targetY;
-   ArrayList<Coordinates> jumped = new ArrayList<Coordinates>();
+    ArrayList<Coordinates> jumped = new ArrayList<Coordinates>();
 	public Move(int initX, int initY, int targX, int targY)
 	{
 		initialX = initX;
 		initialY = initY;
 		targetX = targX;
 		targetY = targY;
-      jumped = null;
+        jumped = null;
 	}	
    public Move(int initX, int initY, int targX, int targY, ArrayList<Coordinates> jumps)
    {
-      initialX = initX;
+        initialX = initX;
 		initialY = initY;
 		targetX = targX;
 		targetY = targY;
-      jumped = jumps;
+        jumped = jumps;
    }
    
 	public int getInitX()
@@ -178,10 +215,10 @@ class Move
    }
 }         
 
-class Coordinate
+class Coordinates
 {
 	private int x, y;
-	public Coordinate(int initX, int initY)
+	public Coordinates(int initX, int initY)
 	{
 		x = initX;
 		y = initY;
