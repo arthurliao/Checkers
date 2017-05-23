@@ -110,7 +110,7 @@ public class CheckerBoard {
 
   }
   
-  public String toString()
+L  public String toString()
   {
      String printout = "";
      for(int y = 0; y < 8; y++)
@@ -129,7 +129,7 @@ public class CheckerBoard {
 class Move
 {
 	private int initialX, initialY, targetX, targetY;
-   ArrayList<Coordinates> jumped = new ArrayList<Coordinates>;
+   ArrayList<Coordinates> jumped = new ArrayList<Coordinates>();
 	public Move(int initX, int initY, int targX, int targY)
 	{
 		initialX = initX;
@@ -138,7 +138,7 @@ class Move
 		targetY = targY;
       jumped = null;
 	}	
-   public Move(int initX, int initY, int targX, int targY, list jumps)
+   public Move(int initX, int initY, int targX, int targY, ArrayList<Coordinates> jumps)
    {
       initialX = initX;
 		initialY = initY;
