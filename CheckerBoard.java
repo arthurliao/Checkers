@@ -202,17 +202,17 @@ public class CheckerBoard {
   }
 }
 
-class Move
+class Move implements Comparable<Move>
 {
 	private int initialX, initialY, targetX, targetY;
-    ArrayList<Coordinates> jumped = new ArrayList<Coordinates>();
+    ArrayList<Coordinates> jumped;
 	public Move(int initX, int initY, int targX, int targY)
 	{
 		initialX = initX;
 		initialY = initY;
 		targetX = targX;
 		targetY = targY;
-        jumped = null;
+        jumped = new ArrayList<Coordinates>();
 	}	
    public Move(int initX, int initY, int targX, int targY, ArrayList<Coordinates> jumps)
    {
@@ -241,6 +241,16 @@ class Move
 	public int getTargetY()
 	{
 		return targetY;
+	}
+	
+	public int compareTo(Move other)
+	{
+		if(jumped.size()  == other.jumped.size())
+			return 0;
+		else if(jumped.size() < other.jumped.size())
+			return -1;
+		else
+			return 1;
 	}
    
    public ArrayList<Coordinates> getJumped()
