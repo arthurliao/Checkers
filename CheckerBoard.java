@@ -57,7 +57,7 @@ public class CheckerBoard {
 			return true;
 		else	
 			return false;
-	}
+/	}
 	
 	private boolean canMove(int initX, int initY, int targetX, int targetY) {
         // This is called by the getLegalMoves() method to determine whether
@@ -87,12 +87,12 @@ public class CheckerBoard {
 
   public ArrayList<Move> legalMoves(int initX, int initY)
   {
-	  int player = board[initX][initY];
 	  Vector<Move> moves = new Vector();
-	  
-	  for (int row = 0; row < 8; row++) {
-          for (int col = 0; col < 8; col++) {
-             if (board[row][col] == player) {
+	  int row = initX;
+          int col = initY;
+	  //for (int row = 0; row < 8; row++) {
+          //for (int col = 0; col < 8; col++) {
+             if (board[row][col] != 0) {
                 if (canMove(row,col,row+1,col+1))
                    moves.addElement(new Move(row,col,row+1,col+1));
                 if (canMove(row,col,row-1,col+1))
