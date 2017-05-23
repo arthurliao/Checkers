@@ -39,7 +39,7 @@ public class CheckerDriver {
             System.out.println("Moves available to you are as follows");
             System.out.println(board.legalMoves(tempX, tempY));////////////////////////////////////////////////////////////////Insert array of moves here
             System.out.println("Red Player, type number of move you want to make");
-            board.move(board.legalMoves(tempX, tempY).get(console.nextInt()));
+            board.move(board.legalMoves(tempX, tempY).poll());//get(console.nextInt()));
          }
          else{
             System.out.println("Black Player, type x coordinate of the piece you want to move");
@@ -49,7 +49,7 @@ public class CheckerDriver {
             System.out.println("Moves available to you are as follows");
             System.out.println(board.legalMoves(tempX, tempY));////////////////////////////////////////////////////////////////Insert array of moves here
             System.out.println("Black Player, type number of the move you want to make");
-            board.move(board.legalMoves(tempX, tempY).get(console.nextInt()));
+            board.move(board.legalMoves(tempX, tempY).poll());//get(console.nextInt()));
          }
          System.out.println(board);
          if(isRedsMove == true)
