@@ -137,8 +137,7 @@ class Move
 		targetX = targX;
 		targetY = targY;
       jumped = null;
-	}
-	
+	}	
    public Move(int initX, int initY, int targX, int targY, list jumps)
    {
       initialX = initX;
@@ -184,8 +183,8 @@ class Coordinate
 	private int x, y;
 	public Coordinate(int initX, int initY)
 	{
-		initialX = initX;
-		initialY = initY;
+		x = initX;
+		y = initY;
 	}
 	
 	public int getX()
