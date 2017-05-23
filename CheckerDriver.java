@@ -1,4 +1,4 @@
-import java.util.Scanner;
+=import java.util.Scanner;
 public class CheckerDriver {
 
    static boolean blackIsPlayer;
@@ -52,7 +52,7 @@ public class CheckerDriver {
             board.move(board.legalMoves(tempX, tempY).get(console.nextInt()));
          }
          System.out.println(board);
-         if(isRedsMove = true)
+         if(isRedsMove == true)
             isRedsMove = false;
          else
             isRedsMove = true;
