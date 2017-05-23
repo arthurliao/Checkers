@@ -105,7 +105,7 @@ public class CheckerBoard {
      
   }  // end canMove()
 
-  public ArrayList<Move> legalMoves(int initX, int initY)
+  public PriorityQueue<Move> legalMoves(int initX, int initY)
   {
 	  int player = board[initX][initY];
 	  Vector<Move> moves = new Vector();
@@ -119,10 +119,6 @@ public class CheckerBoard {
     		  moves.addElement(new Move(row,col,row+1,col+1));
           if (canMove(row,col,row+1,col-1))
               moves.addElement(new Move(row,col,row+1,col-1));
-          if(canMove(row, col, row + 2, col +2) && board[row+1][col+1] == RED)
-        	  moves.addElement(new Move(row, col, row+2, col+2));
-          if(canMove(row, col, row + 2, col -2) && board[row+1][col-1] == RED)
-        	  moves.addElement(new Move(row, col, row+2, col-2));
       }
       else if(player == RED)
       {
@@ -130,23 +126,66 @@ public class CheckerBoard {
 	          moves.addElement(new Move(row,col,row-1,col+1));
 	      if (canMove(row,col,row-1,col-1))
 	          moves.addElement(new Move(row,col,row-1,col-1));
-          if(canMove(row, col, row - 2, col - 2) && board[row-1][col-1] == BLACK)
-          {
-        	  ArrayList<Coordinates> temp = new ArrayList<Coordinates>();
-        	  temp.add(new Coordinates(row-1,col-1));
-        	  moves.addElement(new Move(row, col, row-2, col-2, temp));
-          }
-          if(canMove(row, col, row - 2, col + 2) && board[row-1][col+1] == BLACK)
-        	  moves.addElement(new Move(row, col, row-2, col-2));
       }
 
 	  
 	  ArrayList<Move> list = new ArrayList<Move>(moves);
-	  return list;
+	  
+	  PriorityQueue<Move> pq = new PriorityQueue<Move>();
+	  pq.addAll(list);
+	  pq.addAll(jumpMove(initX, initY));
+	  
+	  return pq;
 
   }
   
-  private 
+  private ArrayList<Move> jumpMove(int x, int y)
+  {
+	  ArrayList<Move> returnedMoves = new ArrayList<Move>();
+	  return jumpMove(x, y, new ArrayList<Coordinates>(), returnedMoves);
+  }
+  
+  private ArrayList<Move> jumpMove(int row, int col, ArrayList<Coordinates> jumpedPieces, ArrayList<Move> moves)
+  {
+	  if(!(canMove(row, col, row + 2, col +2) && canMove(row, col, row + 2, col -2) && canMove(row, col, row + 2, col - 2) && canMove(row, col, row - 2, col -2)))
+		  return moves;
+	  int player = board[row][col];
+	  if(player == BLACK)
+	  {
+		  if(canMove(row, col, row + 2, col +2) && board[row+1][col+1] == RED)
+		  {
+        	  jumpedPieces.add(new Coordinates(row+1,col+1));
+			  moves.add(new Move(row, col, row+2, col+2, jumpedPieces));
+			  return jumpMove(row+2, col+2, jumpedPieces, moves);
+			  //jumpMove(row+2, col-2, jumpedPieces, moves);
+		  }
+          if(canMove(row, col, row + 2, col -2) && board[row+1][col-1] == RED)
+		  {
+        	  jumpedPieces.add(new Coordinates(row+1,col-1));
+			  moves.add(new Move(row, col, row+2, col-2, jumpedPieces));
+			  //jumpMove(row+2, col+2, jumpedPieces, moves);
+			  return jumpMove(row+2, col-2, jumpedPieces, moves);
+		  }
+	  }
+	  else if(player == RED)
+	  {
+          if(canMove(row, col, row - 2, col - 2) && board[row-1][col-1] == BLACK)
+          {
+        	  jumpedPieces.add(new Coordinates(row-1,col-1));
+			  moves.add(new Move(row, col, row-2, col-2, jumpedPieces));
+			  return jumpMove(row-2, col-2, jumpedPieces, moves);
+			  //jumpMove(row-2, col+2, jumpedPieces, moves);
+          }
+          if(canMove(row, col, row - 2, col + 2) && board[row-1][col+1] == BLACK)
+          {
+        	  jumpedPieces.add(new Coordinates(row-1,col+1));
+			  moves.add(new Move(row, col, row-2, col+2, jumpedPieces));
+			  return jumpMove(row-2, col+2, jumpedPieces, moves);
+			  //jumpMove(row-2, col-2, jumpedPieces, moves);
+          }
+	  }
+	  return moves;
+  }
 
   public String toString()
   {
