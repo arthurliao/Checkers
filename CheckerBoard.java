@@ -49,7 +49,7 @@ public class CheckerBoard {
 			int targY = validMove.getTargetY();
 
 			
-			if(jumpedPieces.size() != 0)//regular move
+			if(jumpedPieces.size() != 0)//jump move
 			{
 				for(int i = 0; i < jumpedPieces.size(); i++)
 				{
@@ -105,7 +105,7 @@ public class CheckerBoard {
      
   }  // end canMove()
 
-  public PriorityQueue<Move> legalMoves(int initX, int initY)
+  /*public PriorityQueue<Move> legalMoves(int initX, int initY)
   {
 	  int player = board[initX][initY];
 	  Vector<Move> moves = new Vector();
@@ -119,7 +119,8 @@ public class CheckerBoard {
     		  moves.addElement(new Move(row,col,row+1,col+1));
           if (canMove(row,col,row+1,col-1))
               moves.addElement(new Move(row,col,row+1,col-1));
-      }      else if(player == RED)
+      }
+      else if(player == RED)
       {
 	      if (canMove(row,col,row-1,col+1))
 	          moves.addElement(new Move(row,col,row-1,col+1));
@@ -137,7 +138,38 @@ public class CheckerBoard {
 	  return pq;
 
   }
-  
+  */
+	public ArrayList<Move> legalMoves(int initX, int initY)
+	  {
+		  int player = board[initX][initY];
+		  Vector<Move> moves = new Vector();
+		  
+
+	      int row = initX;
+	      int col = initY;
+	      if(player == BLACK)
+	      {
+	    	  if (canMove(row,col,row+1,col+1))
+	    		  moves.addElement(new Move(row,col,row+1,col+1));
+	          if (canMove(row,col,row+1,col-1))
+	              moves.addElement(new Move(row,col,row+1,col-1));
+	      }
+	      else if(player == RED)
+	      {
+		      if (canMove(row,col,row-1,col+1))
+		          moves.addElement(new Move(row,col,row-1,col+1));
+		      if (canMove(row,col,row-1,col-1))
+		          moves.addElement(new Move(row,col,row-1,col-1));
+	      }
+
+		  
+		  ArrayList<Move> list = new ArrayList<Move>(moves);
+		  list.addAll(jumpMove(initX, initY));
+
+		  
+		  return list;
+
+	  }
   private ArrayList<Move> jumpMove(int x, int y)
   {
 	  ArrayList<Move> returnedMoves = new ArrayList<Move>();
@@ -155,15 +187,21 @@ public class CheckerBoard {
 		  {
         	  jumpedPieces.add(new Coordinates(row+1,col+1));
 			  moves.add(new Move(row, col, row+2, col+2, jumpedPieces));
-			  return jumpMove(row+2, col+2, jumpedPieces, moves);
-			  //jumpMove(row+2, col-2, jumpedPieces, moves);
+			  //moves.removeAll(jumpMove(row+2, col+2, jumpedPieces, moves));
+			  moves.addAll(jumpMove(row+2, col+2, jumpedPieces, moves));
+			  //moves.removeAll(jumpMove(row+2, col-2, jumpedPieces, moves));
+			  moves.addAll(jumpMove(row+2, col-2, jumpedPieces, moves));
+			  return moves;
 		  }
           if(canMove(row, col, row + 2, col -2) && board[row+1][col-1] == RED)
 		  {
         	  jumpedPieces.add(new Coordinates(row+1,col-1));
 			  moves.add(new Move(row, col, row+2, col-2, jumpedPieces));
-			  //jumpMove(row+2, col+2, jumpedPieces, moves);
-			  return jumpMove(row+2, col-2, jumpedPieces, moves);
+			  //moves.removeAll(jumpMove(row+2, col+2, jumpedPieces, moves));
+			  moves.addAll(jumpMove(row+2, col+2, jumpedPieces, moves));
+			  //moves.removeAll(jumpMove(row+2, col-2, jumpedPieces, moves));
+			  moves.addAll(jumpMove(row+2, col-2, jumpedPieces, moves));
+			  return moves;
 		  }
 	  }
 	  else if(player == RED)
@@ -172,15 +210,21 @@ public class CheckerBoard {
           {
         	  jumpedPieces.add(new Coordinates(row-1,col-1));
 			  moves.add(new Move(row, col, row-2, col-2, jumpedPieces));
-			  return jumpMove(row-2, col-2, jumpedPieces, moves);
-			  //jumpMove(row-2, col+2, jumpedPieces, moves);
+			  //moves.removeAll(jumpMove(row-2, col-2, jumpedPieces, moves));
+			  moves.addAll(jumpMove(row-2, col-2, jumpedPieces, moves));
+			  //moves.removeAll(jumpMove(row-2, col+2, jumpedPieces, moves));
+			  moves.addAll(jumpMove(row-2, col+2, jumpedPieces, moves));
+			  return moves;
           }
           if(canMove(row, col, row - 2, col + 2) && board[row-1][col+1] == BLACK)
           {
         	  jumpedPieces.add(new Coordinates(row-1,col+1));
 			  moves.add(new Move(row, col, row-2, col+2, jumpedPieces));
-			  return jumpMove(row-2, col+2, jumpedPieces, moves);
-			  //jumpMove(row-2, col-2, jumpedPieces, moves);
+			  //moves.removeAll(jumpMove(row-2, col+2, jumpedPieces, moves));
+			  moves.addAll(jumpMove(row-2, col+2, jumpedPieces, moves));
+			  //moves.removeAll(jumpMove(row-2, col-2, jumpedPieces, moves));
+			  moves.addAll(jumpMove(row-2, col-2, jumpedPieces, moves));
+			  return moves;
           }
 	  }
 	  return moves;
