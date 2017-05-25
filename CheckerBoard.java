@@ -179,55 +179,127 @@ public class CheckerBoard {
   private ArrayList<Move> jumpMove(int row, int col, ArrayList<Coordinates> jumpedPieces, ArrayList<Move> moves)
   {
 	  if(!(canMove(row, col, row + 2, col +2) || canMove(row, col, row + 2, col -2) || canMove(row, col, row + 2, col - 2) || canMove(row, col, row - 2, col -2)))
+
 		  return moves;
+
 	  int player = board[row][col];
+     int currRow = row;
+     int currCol = col;
+     int lastRow = -1;
+     int lastCol = -1;
 	  if(player == BLACK)
+
 	  {
-		  if(canMove(row, col, row + 2, col +2) && board[row+1][col+1] == RED)
+     while(currRow!=lastRow && currCol!=lastCol)
+     {
+        lastRow = currRow;
+        lastCol = currCol;
+		  if(canMove(currRow, currCol, currRow + 2, currCol +2) && board[currRow+1][currCol+1] == RED)
 		  {
-        	  jumpedPieces.add(new Coordinates(row+1,col+1));
-			  moves.add(new Move(row, col, row+2, col+2, jumpedPieces));
-			  //moves.removeAll(jumpMove(row+2, col+2, jumpedPieces, moves));
+        	  jumpedPieces.add(new Coordinates(currRow+1,currCol+1));
+
+			  moves.add(new Move(row, col, currRow+2, currCol+2, jumpedPieces));
+
+			  currRow += 2;
+           currCol += 2;
+           
+           /*moves.removeAll(jumpMove(row+2, col+2, jumpedPieces, moves));
+
 			  moves.addAll(jumpMove(row+2, col+2, jumpedPieces, moves));
-			  //moves.removeAll(jumpMove(row+2, col-2, jumpedPieces, moves));
-			  moves.addAll(jumpMove(row+2, col-2, jumpedPieces, moves));
-			  return moves;
+
+			  moves.removeAll(jumpMove(row+2, col-2, jumpedPieces, moves));
+
+			  moves.addAll(jumpMove(row+2, col-2, jumpedPieces, moves));*/
+
+			  //return moves;
+
 		  }
-          if(canMove(row, col, row + 2, col -2) && board[row+1][col-1] == RED)
+
+          if(canMove(currRow, currCol, currRow + 2, currCol -2) && board[currRow+1][currCol-1] == RED)
+
 		  {
-        	  jumpedPieces.add(new Coordinates(row+1,col-1));
-			  moves.add(new Move(row, col, row+2, col-2, jumpedPieces));
-			  //moves.removeAll(jumpMove(row+2, col+2, jumpedPieces, moves));
+
+        	  jumpedPieces.add(new Coordinates(currRow+1,currCol-1));
+
+			  moves.add(new Move(row, col, currRow+2, currCol-2, jumpedPieces));
+
+			  currCol -= 2;
+           currRow += 2;
+           
+           /*moves.removeAll(jumpMove(row+2, col+2, jumpedPieces, moves));
+
 			  moves.addAll(jumpMove(row+2, col+2, jumpedPieces, moves));
-			  //moves.removeAll(jumpMove(row+2, col-2, jumpedPieces, moves));
+
+			  moves.removeAll(jumpMove(row+2, col-2, jumpedPieces, moves));
+
 			  moves.addAll(jumpMove(row+2, col-2, jumpedPieces, moves));
-			  return moves;
-		  }
+
+			  //return moves;
+
+		  */}
+
 	  }
+     }
+
 	  else if(player == RED)
+
 	  {
-          if(canMove(row, col, row - 2, col - 2) && board[row-1][col-1] == BLACK)
+     while(currRow!=lastRow && currCol!=lastCol)
+     {
+        lastRow = currRow;
+        lastCol = currCol;
+          if(canMove(currRow, currCol, currRow - 2, currCol - 2) && board[currRow-1][currCol-1] == BLACK)
+
           {
-        	  jumpedPieces.add(new Coordinates(row-1,col-1));
-			  moves.add(new Move(row, col, row-2, col-2, jumpedPieces));
-			  //moves.removeAll(jumpMove(row-2, col-2, jumpedPieces, moves));
+
+        	  jumpedPieces.add(new Coordinates(currRow-1,currCol-1));
+
+			  moves.add(new Move(row, col, currRow-2, currCol-2, jumpedPieces));
+
+			  currCol -= 2;
+           currRow -= 2;
+           
+           
+           /*moves.removeAll(jumpMove(row-2, col-2, jumpedPieces, moves));
+
 			  moves.addAll(jumpMove(row-2, col-2, jumpedPieces, moves));
-			  //moves.removeAll(jumpMove(row-2, col+2, jumpedPieces, moves));
+
+			  moves.removeAll(jumpMove(row-2, col+2, jumpedPieces, moves));
+
 			  moves.addAll(jumpMove(row-2, col+2, jumpedPieces, moves));
-			  return moves;
+
+			  *///return moves;
+
           }
-          if(canMove(row, col, row - 2, col + 2) && board[row-1][col+1] == BLACK)
+
+          if(canMove(currRow, currCol, currRow - 2, currCol + 2) && board[currRow-1][currCol+1] == BLACK)
+
           {
-        	  jumpedPieces.add(new Coordinates(row-1,col+1));
-			  moves.add(new Move(row, col, row-2, col+2, jumpedPieces));
-			  //moves.removeAll(jumpMove(row-2, col+2, jumpedPieces, moves));
+
+        	  jumpedPieces.add(new Coordinates(currRow-1,currCol+1));
+
+			  moves.add(new Move(row, col, currRow-2, currCol+2, jumpedPieces));
+
+			  currCol += 2;
+           currRow -= 2;
+           
+           
+           
+           /*moves.removeAll(jumpMove(row-2, col+2, jumpedPieces, moves));
+
 			  moves.addAll(jumpMove(row-2, col+2, jumpedPieces, moves));
-			  //moves.removeAll(jumpMove(row-2, col-2, jumpedPieces, moves));
+
+			  moves.removeAll(jumpMove(row-2, col-2, jumpedPieces, moves));
+
 			  moves.addAll(jumpMove(row-2, col-2, jumpedPieces, moves));
-			  return moves;
+
+			  *///return moves;
+
           }
+
 	  }
-	  return moves;
+     }
+  return moves;
   }
 
   public String toString()
