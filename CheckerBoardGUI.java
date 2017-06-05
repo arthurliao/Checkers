@@ -1,21 +1,27 @@
  import java.awt.*;
  import java.awt.event.*;
  import java.util.Scanner;
+ import java.util.*;
 
  import javax.swing.*;
 
 public class CheckerBoardGUI extends JPanel{
 	private JButton[][] buttonBoard;
 	private JButton reset,start;
-	   static boolean blackIsPlayer;
-	   static boolean redIsPlayer;
-	   static boolean isRedsMove;
-	   static CheckerBoard board;
+	static boolean blackIsPlayer;
+	static boolean redIsPlayer;
+	static boolean isRedsMove;
+	static CheckerBoard board;
+	private boolean checker = false;
+	private Coordinates temp;
+	
 	public CheckerBoardGUI(){
 		setLayout(new BorderLayout());
 		reset = new JButton("Reset");
 		start = new JButton("Start");
 		reset.setEnabled(false);
+		
+	    board = new CheckerBoard();//Create board
 		
 		JPanel south = new JPanel();
 		south.setLayout(new FlowLayout());
@@ -33,7 +39,7 @@ public class CheckerBoardGUI extends JPanel{
 				buttonBoard[r][c] = new JButton();
 
 				if(r % 2 == 0){
-					if(c % 2 == 0){
+					if(c % 2 == 1){
 						buttonBoard[r][c].setBackground(Color.red);
 						buttonBoard[r][c].setEnabled(false);
 					}
@@ -43,7 +49,7 @@ public class CheckerBoardGUI extends JPanel{
 					}
 				}
 				else{
-					if(c % 2 == 0){
+					if(c % 2 == 1){
 						buttonBoard[r][c].setBackground(Color.white);
 						buttonBoard[r][c].setEnabled(false);
 					}
@@ -68,26 +74,26 @@ public class CheckerBoardGUI extends JPanel{
 					}
 					
 					if(r == 0 ||  r == 2){
-						if(c % 2 == 1){
+						if(c % 2 == 0){
 							StretchIcon icon = new StretchIcon("C:\\Users\\black.jpg");
 						    buttonBoard[r][c].setIcon(icon);
 						}
 					}
 					else if(r == 1){
-						if(c % 2 == 0){
+						if(c % 2 == 1){
 							StretchIcon icon = new StretchIcon("C:\\Users\\black.jpg");
 						    buttonBoard[r][c].setIcon(icon);
 						}
 					}
 					else if(r == 5 || r == 7){
-						if(c % 2 == 0){
+						if(c % 2 == 1){
 							StretchIcon icon = new StretchIcon("C:\\Users\\red.png");
 						    buttonBoard[r][c].setIcon(icon);
 						}
 							
 					}
 					else if(r == 6){
-						if(c % 2 == 1){
+						if(c % 2 == 0){
 							StretchIcon icon = new StretchIcon("C:\\Users\\red.png");
 						    buttonBoard[r][c].setIcon(icon);
 						}
@@ -107,18 +113,33 @@ public class CheckerBoardGUI extends JPanel{
 		}
 		
 		public void actionPerformed(ActionEvent e){
-			//if()
+
+			if(checker == false){
+				checker = true;
+				temp = new Coordinates(r, c);
+				ArrayList<Move> legalMoves = board.legalMoves(r, c);
+				for(int i = 0; i < legalMoves.size();i++){
+					int targX = legalMoves.get(i).getTargetX();
+					int targY = legalMoves.get(i).getTargetY();
+					buttonBoard[targX][targY].setBackground(Color.blue);
+
+				}
+			}
+			else{
+				
+			}
+			
 		}
 	}//end MainListener
 		   public static void main(String args[]){
 		      
-			      //Find who won
-			      JFrame frame = new JFrame("Checkers");
-			      frame.setSize(450, 400);
-			      frame.setLocation(200, 100);
-			      frame.setContentPane(new CheckerBoardGUI());
-			      frame.setVisible(true);
-			      frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+			      
+			  JFrame frame = new JFrame("Checkers");
+			  frame.setSize(450, 400);
+			  frame.setLocation(200, 100);
+			  frame.setContentPane(new CheckerBoardGUI());
+			  frame.setVisible(true);
+			  frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 			   
 			  Scanner console = new Scanner(System.in);
 		      isRedsMove = true;
@@ -137,7 +158,7 @@ public class CheckerBoardGUI extends JPanel{
 		         redIsPlayer = false;
 		      }
 		     
-		      board = new CheckerBoard();//Create board
+
 		     
 		     
 		      while(board.checkWin() == false){//Play Game
