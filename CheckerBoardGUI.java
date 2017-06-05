@@ -1,8 +1,9 @@
-   import java.awt.*;
-   import java.awt.event.*;
-import java.util.Scanner;
+ import java.awt.*;
+ import java.awt.event.*;
+ import java.util.Scanner;
 
-import javax.swing.*;
+ import javax.swing.*;
+
 public class CheckerBoardGUI extends JPanel{
 	private JButton[][] buttonBoard;
 	private JButton reset,start;
@@ -68,19 +69,19 @@ public class CheckerBoardGUI extends JPanel{
 					
 					if(r == 0 ||  r == 2){
 						if(c % 2 == 1){
-							StretchIcon icon = new StretchIcon("C:\\Users\\Liao_Family\\Arthur\\Eclipse\\workspace\\Final Project\\src\\red.png");
+							StretchIcon icon = new StretchIcon("C:\\Users\\black.jpg");
 						    buttonBoard[r][c].setIcon(icon);
 						}
 					}
 					else if(r == 1){
 						if(c % 2 == 0){
-							StretchIcon icon = new StretchIcon("C:\\Users\\Liao_Family\\Arthur\\Eclipse\\workspace\\Final Project\\src\\red.png");
+							StretchIcon icon = new StretchIcon("C:\\Users\\black.jpg");
 						    buttonBoard[r][c].setIcon(icon);
 						}
 					}
 					else if(r == 5 || r == 7){
 						if(c % 2 == 0){
-							StretchIcon icon = new StretchIcon("C:\\Users\\black.jpg");
+							StretchIcon icon = new StretchIcon("C:\\Users\\red.png");
 						    buttonBoard[r][c].setIcon(icon);
 						}
 							
