@@ -14,6 +14,7 @@ public class CheckerBoardGUI extends JPanel{
 	static CheckerBoard board;
 	private boolean checker = false;
 	private Coordinates temp;
+	private ArrayList<Move> legalMoves;
 	
 	public CheckerBoardGUI(){
 		setLayout(new BorderLayout());
@@ -117,16 +118,31 @@ public class CheckerBoardGUI extends JPanel{
 			if(checker == false){
 				checker = true;
 				temp = new Coordinates(r, c);
-				ArrayList<Move> legalMoves = board.legalMoves(r, c);
+				legalMoves = board.legalMoves(r, c);
 				for(int i = 0; i < legalMoves.size();i++){
 					int targX = legalMoves.get(i).getTargetX();
 					int targY = legalMoves.get(i).getTargetY();
 					buttonBoard[targX][targY].setBackground(Color.blue);
-
 				}
 			}
 			else{
-				
+				if(buttonBoard[r][c].getBackground().equals(Color.blue)){
+					
+					checker = false;
+					
+					int initX = temp.getX();
+					int initY = temp.getY();
+					board.move(new Move(initX, initY, r, c));
+					StretchIcon tempIcon = (StretchIcon)buttonBoard[initX][initY].getIcon();
+					buttonBoard[initX][initY].setIcon(null);
+					buttonBoard[r][c].setIcon(tempIcon);
+					
+					for(int i = 0; i < legalMoves.size(); i++){
+						int targX = legalMoves.get(i).getTargetX();
+						int targY = legalMoves.get(i).getTargetY();
+						buttonBoard[targX][targY].setBackground(Color.white);
+					}
+				}
 			}
 			
 		}
