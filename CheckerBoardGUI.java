@@ -18,6 +18,8 @@ public class CheckerBoardGUI extends JPanel{
 	
 	private static StretchIcon redIcon = new StretchIcon("C:\\Users\\red.png");
 	private static StretchIcon blackIcon = new StretchIcon("C:\\Users\\black.jpg");
+	private static StretchIcon redKingIcon = new StretchIcon("C:\\Users\\redKing.png");
+	private static StretchIcon blackKingIcon = new StretchIcon("C:\\Users\\blackKing.jpg");
 	public CheckerBoardGUI(){
 		setLayout(new BorderLayout());
 		reset = new JButton("Reset");
@@ -114,13 +116,19 @@ public class CheckerBoardGUI extends JPanel{
 		public void actionPerformed(ActionEvent e){
 
 			if(checker == false){
-				checker = true;
-				temp = new Coordinates(r, c);
+				checker = true;					
 				legalMoves = board.legalMoves(r, c);
-				for(int i = 0; i < legalMoves.size();i++){
-					int targX = legalMoves.get(i).getTargetX();
-					int targY = legalMoves.get(i).getTargetY();
-					buttonBoard[targX][targY].setBackground(Color.blue);
+				if(legalMoves.size() != 0){
+					temp = new Coordinates(r, c);
+
+					for(int i = 0; i < legalMoves.size();i++){
+						int targX = legalMoves.get(i).getTargetX();
+						int targY = legalMoves.get(i).getTargetY();
+						buttonBoard[targX][targY].setBackground(Color.blue);
+					}
+				}
+				else{
+					checker = false;
 				}
 			}
 			else{
@@ -130,7 +138,10 @@ public class CheckerBoardGUI extends JPanel{
 					
 					int initX = temp.getX();
 					int initY = temp.getY();
-					board.move(new Move(initX, initY, r, c));
+				    for(int i = 0; i < board.legalMoves(initX, initY).size(); i++){
+				    	if(board.legalMoves(initX, initY).get(i).getTargetX() == r && board.legalMoves(initX, initY).get(i).getTargetY() == c)
+				    		board.move(board.legalMoves(initX, initY).get(i));
+				    }
 					StretchIcon tempIcon = (StretchIcon)buttonBoard[initX][initY].getIcon();
 					buttonBoard[initX][initY].setIcon(null);
 					buttonBoard[r][c].setIcon(tempIcon);
@@ -158,6 +169,12 @@ public class CheckerBoardGUI extends JPanel{
 				}
 				else if(board.board[r][c] == 0){//EMPTY
 					buttonBoard[r][c].setIcon(null);
+				}
+				else if(board.board[r][c] == 3){//RED KING
+					buttonBoard[r][c].setIcon(redKingIcon);
+				}
+				else if(board.board[r][c] == 4){//BLACK KING
+					buttonBoard[r][c].setIcon(blackKingIcon);
 				}
 			}
 		}
