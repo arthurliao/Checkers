@@ -148,22 +148,31 @@ public class CheckerBoardGUI extends JPanel{
 	}//end MainListener
 	
 	private void refreshBoard(){
-		int[][] internalBoard = board.getBoard();
-		for(int r = 0; r < internalBoard.length; r++){
-			for(int c = 0; c < internalBoard[r].length; c++){
-				if(internalBoard[r][c] == 1){//RED
+		for(int r = 0; r < board.board.length; r++){
+			for(int c = 0; c < board.board[r].length; c++){
+				if(board.board[r][c] == 1){//RED
 					buttonBoard[r][c].setIcon(redIcon);
 				}
-				else if(internalBoard[r][c] == 2){//BLACK
+				else if(board.board[r][c] == 2){//BLACK
 					buttonBoard[r][c].setIcon(blackIcon);
 				}
-				else if(internalBoard[r][c] == 0){//EMPTY
+				else if(board.board[r][c] == 0){//EMPTY
 					buttonBoard[r][c].setIcon(null);
 				}
 			}
 		}
 	}
-	public static void main(String args[]){
+	
+	private void printBoard(){
+		int[][] internalBoard = board.getBoard();
+		for(int r = 0; r < internalBoard.length; r ++){
+			for(int c = 0; c < internalBoard[0].length; c ++){
+				System.out.print(internalBoard[r][c]);
+			}
+			System.out.println();
+		}
+	}
+		   public static void main(String args[]){
 		      
 			      
 			  JFrame frame = new JFrame("Checkers");
