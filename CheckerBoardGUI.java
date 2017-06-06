@@ -16,6 +16,8 @@ public class CheckerBoardGUI extends JPanel{
 	private Coordinates temp;
 	private ArrayList<Move> legalMoves;
 	
+	private static StretchIcon redIcon = new StretchIcon("C:\\Users\\red.png");
+	private static StretchIcon blackIcon = new StretchIcon("C:\\Users\\black.jpg");
 	public CheckerBoardGUI(){
 		setLayout(new BorderLayout());
 		reset = new JButton("Reset");
@@ -76,27 +78,23 @@ public class CheckerBoardGUI extends JPanel{
 					
 					if(r == 0 ||  r == 2){
 						if(c % 2 == 0){
-							StretchIcon icon = new StretchIcon("C:\\Users\\black.jpg");
-						    buttonBoard[r][c].setIcon(icon);
+						    buttonBoard[r][c].setIcon(blackIcon);
 						}
 					}
 					else if(r == 1){
 						if(c % 2 == 1){
-							StretchIcon icon = new StretchIcon("C:\\Users\\black.jpg");
-						    buttonBoard[r][c].setIcon(icon);
+						    buttonBoard[r][c].setIcon(blackIcon);
 						}
 					}
 					else if(r == 5 || r == 7){
 						if(c % 2 == 1){
-							StretchIcon icon = new StretchIcon("C:\\Users\\red.png");
-						    buttonBoard[r][c].setIcon(icon);
+						    buttonBoard[r][c].setIcon(redIcon);
 						}
 							
 					}
 					else if(r == 6){
 						if(c % 2 == 0){
-							StretchIcon icon = new StretchIcon("C:\\Users\\red.png");
-						    buttonBoard[r][c].setIcon(icon);
+						    buttonBoard[r][c].setIcon(redIcon);
 						}
 					}
 				}
@@ -144,10 +142,28 @@ public class CheckerBoardGUI extends JPanel{
 					}
 				}
 			}
+			refreshBoard();
 			
 		}
 	}//end MainListener
-		   public static void main(String args[]){
+	
+	private void refreshBoard(){
+		int[][] internalBoard = board.getBoard();
+		for(int r = 0; r < internalBoard.length; r++){
+			for(int c = 0; c < internalBoard[r].length; c++){
+				if(internalBoard[r][c] == 1){//RED
+					buttonBoard[r][c].setIcon(redIcon);
+				}
+				else if(internalBoard[r][c] == 2){//BLACK
+					buttonBoard[r][c].setIcon(blackIcon);
+				}
+				else if(internalBoard[r][c] == 0){//EMPTY
+					buttonBoard[r][c].setIcon(null);
+				}
+			}
+		}
+	}
+	public static void main(String args[]){
 		      
 			      
 			  JFrame frame = new JFrame("Checkers");
@@ -159,7 +175,7 @@ public class CheckerBoardGUI extends JPanel{
 			   
 			  Scanner console = new Scanner(System.in);
 		      isRedsMove = true;
-		      System.out.println("Is black a real player? type y/n");//Determine who is real and who will be computer controlled
+		      /*System.out.println("Is black a real player? type y/n");//Determine who is real and who will be computer controlled
 		      if(console.next().equals("y")){
 		         blackIsPlayer = true;
 		      }
@@ -172,7 +188,7 @@ public class CheckerBoardGUI extends JPanel{
 		      }
 		      else{
 		         redIsPlayer = false;
-		      }
+		      }*/
 		     
 
 		     
@@ -212,8 +228,6 @@ public class CheckerBoardGUI extends JPanel{
 		         else
 		            isRedsMove = true;
 		      }
-		      
-
 		      
 		      
 		      
