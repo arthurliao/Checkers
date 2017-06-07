@@ -1,6 +1,6 @@
 import java.util.*;
 public class CheckerBoard {
-	private int[][] board;
+	public int[][] board;
 	private int redNum, blackNum;
 	public static final int 
 			EMPTY = 0,
@@ -15,7 +15,10 @@ public class CheckerBoard {
 		blackNum = 12;
 		setUpBoard();
 	}
-
+	
+	public int[][] getBoard(){
+		return board;
+	}
 	private void setUpBoard()
 	{
 	      for (int row = 0; row < 8; row++) {
@@ -34,7 +37,7 @@ public class CheckerBoard {
 	          }
 	       }
 	}
-
+/*
    public Move aIMove(boolean isRed)
    {
       Move move;
@@ -58,18 +61,18 @@ public class CheckerBoard {
          {
             for(int y2 = 0; y2 < 8; y2++)
             {
-               if(board[x][y] == BLACK || board[x][y] == BLACK_KING)
+               if(board[x2][y2] == BLACK || board[x2][y2] == BLACK_KING)
                {
-                  pieces.add(new Coordinates(x,y));
+                  pieces.add(new Coordinates(x2,y2));
                }
             }
          }
       }
-      int randomPiece = (pieces.size()+1)*Math.random()
-      move = legalMoves(pieces.get(randomPiece).getX(), pieces.get(randomPiece).getY()).get((legalMoves(pieces.get(randomPiece).getX(), pieces.get(randomPiece).getY()).size()+1)*Math.random());
+      //int randomPiece = (pieces.size()+1)*Math.random();
+      //move = legalMoves(pieces.get(randomPiece).getX(), pieces.get(randomPiece).getY()).get((legalMoves(pieces.get(randomPiece).getX(), pieces.get(randomPiece).getY()).size()+1)*Math.random());
       return move;
    }
-
+*/
 	public boolean move(Move validMove)
 	{
 		//ArrayList legalMoves = legalMoves(validMove.getInitX(), validMove.getInitY());
@@ -80,21 +83,22 @@ public class CheckerBoard {
 			int initY = validMove.getInitY();
 			int targX = validMove.getTargetX();
 			int targY = validMove.getTargetY();
+			
 			if(jumpedPieces.size() != 0)//jump move
 			{
 				for(int i = 0; i < jumpedPieces.size(); i++)
 				{
 					int removeX = jumpedPieces.get(i).getX();
 					int removeY = jumpedPieces.get(i).getY();
-               if(board[removeX][removeY] == RED || board[removeX][removeY] == RED_KING)
-               {
-                  blackNum--;
-               }
-               else if(board[removeX][removeY] == BLACK || board[removeX][removeY] == BLACK_KING)
-               {
-                  redNum--;
-               }
-					board[removeX][removeY] = EMPTY;
+	               if(board[removeX][removeY] == RED || board[removeX][removeY] == RED_KING)
+	               {
+	                  blackNum--;
+	               }
+	               else if(board[removeX][removeY] == BLACK || board[removeX][removeY] == BLACK_KING)
+	               {
+	                  redNum--;
+	               }
+				   board[removeX][removeY] = EMPTY;
 				}
 			}
 			int value = board[initX][initY];
@@ -218,11 +222,23 @@ public class CheckerBoard {
 
   private ArrayList<Move> jumpMove(int row, int col, int initRow, int initCol, ArrayList<Coordinates> jumpedPieces, ArrayList<Move> moves)
   {
-	  if(!(canMove(initRow, initCol, row + 2, col +2) || canMove(initRow, initCol, row + 2, col -2) || canMove(initRow, initCol, row + 2, col - 2) || canMove(initRow, initCol, row - 2, col -2)))
-		  return moves;
+/*	  System.out.println("check1 jumpMove:"+initRow+":"+initCol);
+	  
+	  System.out.println("can move1:"+canMove(initRow, initCol, row + 2, col +2) );
+	  System.out.println("can move2:"+canMove(initRow, initCol, row + 2, col -2) );
+	  System.out.println("can move3:"+canMove(initRow, initCol, row - 2, col +2) );
+	  System.out.println("can move4:"+canMove(initRow, initCol, row - 2, col -2) );
+*/	  
+
+	  if(!(canMove(initRow, initCol, row + 2, col +2) 
+			  || canMove(initRow, initCol, row + 2, col -2) 
+			  || canMove(initRow, initCol, row - 2, col + 2)
+			  || canMove(initRow, initCol, row - 2, col -2) ))
+		  return moves;	  
 	  ArrayList <Coordinates> temp;
      Coordinates tempCor;
      int player = board[initRow][initCol];
+     System.out.println("check jumpmove:"+player);     
      if(player == BLACK)
 	  {
         if(canMove(initRow, initCol, row + 2, col +2) && (board[row+1][col+1] == RED ||board[row+1][col+1] == RED_KING))
@@ -245,10 +261,10 @@ public class CheckerBoard {
 		     jumpedPieces.remove(tempCor);
         }
 	  }
-     
 	  else if(player == RED)
 	  {
-          if(canMove(initRow, initCol, row - 2, col - 2) && (board[row-1][col-1] == BLACK ||board[row-1][col-1] == BLACK_KING))
+          //System.out.print("debug All");
+		  if(canMove(initRow, initCol, row - 2, col - 2) && (board[row-1][col-1] == BLACK ||board[row-1][col-1] == BLACK_KING))
           {
         	  jumpedPieces.add(tempCor = new Coordinates(row-1,col-1));
            temp = new ArrayList<Coordinates>();
@@ -257,9 +273,10 @@ public class CheckerBoard {
           moves.addAll(jumpMove(row-2, col-2, initRow, initCol, jumpedPieces, moves));
           jumpedPieces.remove(tempCor);
           }
-
+          //System.out.print("debug Right");
           if(canMove(initRow, initCol, row - 2, col + 2) && (board[row-1][col+1] == BLACK ||board[row-1][col+1] == BLACK_KING))
           {
+        	  //System.out.println("debug");
         	  jumpedPieces.add(tempCor = new Coordinates(row-1,col+1));
 			  temp = new ArrayList<Coordinates>();
            temp.addAll(jumpedPieces);
