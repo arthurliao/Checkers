@@ -238,7 +238,7 @@ public class CheckerBoard {
 	  ArrayList <Coordinates> temp;
      Coordinates tempCor;
      int player = board[initRow][initCol];
-     System.out.println("check jumpmove:"+player);     
+     //System.out.println("check jumpmove:"+player);     
      if(player == BLACK)
 	  {
         if(canMove(initRow, initCol, row + 2, col +2) && (board[row+1][col+1] == RED ||board[row+1][col+1] == RED_KING))
