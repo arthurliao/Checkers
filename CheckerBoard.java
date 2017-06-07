@@ -289,6 +289,10 @@ public class CheckerBoard {
            temp = new ArrayList<Coordinates>();
            temp.addAll(jumpedPieces);
            moves.add(new Move(initRow, initCol, row-2, col-2, temp));
+           if(moves.size() > 12)
+           {
+            return moves;
+           }
           moves.addAll(jumpMove(row-2, col-2, initRow, initCol, jumpedPieces, moves));
           jumpedPieces.remove(tempCor);
           }
@@ -298,6 +302,10 @@ public class CheckerBoard {
 			  temp = new ArrayList<Coordinates>();
            temp.addAll(jumpedPieces);
            moves.add(new Move(initRow, initCol, row-2, col+2, temp));
+          if(moves.size() > 12)
+           {
+            return moves;
+           }
           moves.addAll(jumpMove(row-2, col+2, initRow, initCol, jumpedPieces, moves));
           jumpedPieces.remove(tempCor);
           }
@@ -307,7 +315,11 @@ public class CheckerBoard {
 			  temp = new ArrayList<Coordinates>();
            temp.addAll(jumpedPieces);
            moves.add(new Move(initRow, initCol, row+2, col+2, temp));
-		    moves.addAll(jumpMove(row+2, col+2, initRow, initCol, jumpedPieces, moves));
+		    if(moves.size() > 12)
+           {
+            return moves;
+           }
+          moves.addAll(jumpMove(row+2, col+2, initRow, initCol, jumpedPieces, moves));
           jumpedPieces.remove(tempCor);
         }
         if(canMove(initRow, initCol, row + 2, col -2) && (board[row+1][col-1] == BLACK ||board[row+1][col-1] == BLACK_KING) && !jumpedPieces.contains(tempCor = new Coordinates(row+1,col-1)))
@@ -316,7 +328,11 @@ public class CheckerBoard {
 			  temp = new ArrayList<Coordinates>();
            temp.addAll(jumpedPieces);
            moves.add(new Move(initRow, initCol, row+2, col-2, temp));
-		   moves.addAll(jumpMove(row+2, col-2, initRow, initCol, jumpedPieces, moves));
+		   if(moves.size() > 12)
+           {
+            return moves;
+           }
+         moves.addAll(jumpMove(row+2, col-2, initRow, initCol, jumpedPieces, moves));
          jumpedPieces.remove(tempCor);
         }
      }
@@ -328,6 +344,10 @@ public class CheckerBoard {
            temp = new ArrayList<Coordinates>();
            temp.addAll(jumpedPieces);
            moves.add(new Move(initRow, initCol, row-2, col-2, temp));
+          if(moves.size() > 12)
+           {
+            return moves;
+           }
           moves.addAll(jumpMove(row-2, col-2, initRow, initCol, jumpedPieces, moves));
           jumpedPieces.remove(tempCor);
           }
@@ -337,6 +357,10 @@ public class CheckerBoard {
 			  temp = new ArrayList<Coordinates>();
            temp.addAll(jumpedPieces);
            moves.add(new Move(initRow, initCol, row-2, col+2, temp));
+          if(moves.size() > 12)
+           {
+            return moves;
+           }
           moves.addAll(jumpMove(row-2, col+2, initRow, initCol, jumpedPieces, moves));
           jumpedPieces.remove(tempCor);
           }
@@ -346,7 +370,11 @@ public class CheckerBoard {
 			  temp = new ArrayList<Coordinates>();
            temp.addAll(jumpedPieces);
            moves.add(new Move(initRow, initCol, row+2, col+2, temp));
-		     moves.addAll(jumpMove(row+2, col+2, initRow, initCol, jumpedPieces, moves));
+		     if(moves.size() > 12)
+           {
+            return moves;
+           }
+           moves.addAll(jumpMove(row+2, col+2, initRow, initCol, jumpedPieces, moves));
            jumpedPieces.remove(tempCor);
         }
         if(canMove(initRow, initCol, row + 2, col -2) && (board[row+1][col-1] == RED ||board[row+1][col-1] == RED_KING) && !jumpedPieces.contains(tempCor = new Coordinates(row+1,col-1)))
@@ -355,6 +383,10 @@ public class CheckerBoard {
 			  temp = new ArrayList<Coordinates>();
            temp.addAll(jumpedPieces);
            moves.add(new Move(initRow, initCol, row+2, col-2, temp));
+           if(moves.size() > 12)
+           {
+            return moves;
+           }
            moves.addAll(jumpMove(row+2, col-2, initRow, initCol, jumpedPieces, moves));
            jumpedPieces.remove(tempCor);
         }
