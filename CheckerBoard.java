@@ -1,7 +1,7 @@
 import java.util.*;
 public class CheckerBoard {
 	public int[][] board;
-	private int redNum, blackNum;
+	public int redNum, blackNum;
 	public static final int 
 			EMPTY = 0,
 			RED = 1,
@@ -147,8 +147,6 @@ public class CheckerBoard {
      }
   }  // end canMove()
 
-
-
   /*public PriorityQueue<Move> legalMoves(int initX, int initY)
   {
 	  int player = board[initX][initY];
@@ -217,8 +215,6 @@ public class CheckerBoard {
 	  ArrayList<Move> returnedMoves = new ArrayList<Move>();
 	  return jumpMove(x, y, x, y, new ArrayList<Coordinates>(), returnedMoves);
   }
-
-  
 
   private ArrayList<Move> jumpMove(int row, int col, int initRow, int initCol, ArrayList<Coordinates> jumpedPieces, ArrayList<Move> moves)
   {
@@ -296,7 +292,6 @@ public class CheckerBoard {
           moves.addAll(jumpMove(row-2, col-2, initRow, initCol, jumpedPieces, moves));
           jumpedPieces.remove(tempCor);
           }
-
           if(canMove(initRow, initCol, row - 2, col + 2) && (board[row-1][col+1] == BLACK ||board[row-1][col+1] == BLACK_KING) && !jumpedPieces.contains(tempCor = new Coordinates(row-1,col+1)))
           {
         	  jumpedPieces.add(tempCor);
@@ -315,7 +310,6 @@ public class CheckerBoard {
 		    moves.addAll(jumpMove(row+2, col+2, initRow, initCol, jumpedPieces, moves));
           jumpedPieces.remove(tempCor);
         }
-
         if(canMove(initRow, initCol, row + 2, col -2) && (board[row+1][col-1] == BLACK ||board[row+1][col-1] == BLACK_KING) && !jumpedPieces.contains(tempCor = new Coordinates(row+1,col-1)))
 		  {
         	  jumpedPieces.add(tempCor);
@@ -324,7 +318,7 @@ public class CheckerBoard {
            moves.add(new Move(initRow, initCol, row+2, col-2, temp));
 		   moves.addAll(jumpMove(row+2, col-2, initRow, initCol, jumpedPieces, moves));
          jumpedPieces.remove(tempCor);
-         }
+        }
      }
      else if(player == BLACK_KING)
      {
@@ -355,8 +349,7 @@ public class CheckerBoard {
 		     moves.addAll(jumpMove(row+2, col+2, initRow, initCol, jumpedPieces, moves));
            jumpedPieces.remove(tempCor);
         }
-
-        if(canMove(initRow, initCol, row + 2, col -2) && (board[row+1][col-1] == RED ||board[row+1][col-1] == RED_KING) && jumpedPieces.contains(tempCor = new Coordinates(row+1,col-1)))
+        if(canMove(initRow, initCol, row + 2, col -2) && (board[row+1][col-1] == RED ||board[row+1][col-1] == RED_KING) && !jumpedPieces.contains(tempCor = new Coordinates(row+1,col-1)))
 		  {
         	  jumpedPieces.add(tempCor);
 			  temp = new ArrayList<Coordinates>();
@@ -384,8 +377,6 @@ public class CheckerBoard {
   }
 }
 
-
-
 class Move implements Comparable<Move>
 {
 	private int initialX, initialY, targetX, targetY;
@@ -397,16 +388,16 @@ class Move implements Comparable<Move>
 		initialY = initY;
 		targetX = targX;
 		targetY = targY;
-        jumped = new ArrayList<Coordinates>();
+      jumped = new ArrayList<Coordinates>();
 	}	
 
    public Move(int initX, int initY, int targX, int targY, ArrayList<Coordinates> jumps)
    {
-        initialX = initX;
+      initialX = initX;
 		initialY = initY;
 		targetX = targX;
 		targetY = targY;
-        jumped = jumps;
+      jumped = jumps;
    }
 
 	public int getInitX()
@@ -443,18 +434,17 @@ class Move implements Comparable<Move>
    {
       return jumped;
    }
-   
+
    public String toString()
    {
       return "(" + initialX + ", " + initialY + ") -> (" + targetX + ", " + targetY + ")" + "J(" + jumped + ")";
    }
 }         
 
-
-
-class Coordinates
+class Coordinates implements Comparable<Coordinates>
 {
 	private int x, y;
+
 	public Coordinates(int initX, int initY)
 	{
 		x = initX;
@@ -470,6 +460,14 @@ class Coordinates
 	{
 		return y;
 	}
+
+   public int compareTo(Coordinates other)
+   {
+      if(other.getX() == x && other.getY() == y)
+         return 0;
+      else
+         return -1;
+   }
 
    public String toString()
    {
