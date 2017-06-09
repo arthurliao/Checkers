@@ -20,10 +20,10 @@ public class CheckerBoardGUI extends JPanel{
 	private Coordinates temp;//this instance variable is used to hold the coordinates of the piece that was selected to be moved
 	private ArrayList<Move> legalMoves;//ArrayList of all possible moves for a piece at its x and y value
 
-	private static StretchIcon redIcon = new StretchIcon("C:\\Users\\red.png");//icons for the pieces 
-	private static StretchIcon blackIcon = new StretchIcon("C:\\Users\\black.jpg");
-	private static StretchIcon redKingIcon = new StretchIcon("C:\\Users\\redKing.png");
-	private static StretchIcon blackKingIcon = new StretchIcon("C:\\Users\\blackKing.jpg");
+	private static StretchIcon redIcon = new StretchIcon("red.png");//icons for the pieces 
+	private static StretchIcon blackIcon = new StretchIcon("black.jpg");
+	private static StretchIcon redKingIcon = new StretchIcon("redKing.png");
+	private static StretchIcon blackKingIcon = new StretchIcon("blackKing.jpg");
 	
    public CheckerBoardGUI(){
 		
